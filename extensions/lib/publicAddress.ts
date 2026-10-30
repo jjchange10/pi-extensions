@@ -3,8 +3,8 @@ import { isIP } from "node:net";
 /**
  * インターネットに公開されたアドレスかを調べる。
  *
- * hayato のコンテナの中には、外から触られたくない受け口（hayato-send の受け口など）がある。
- * Web の道具からそこへ届かないよう、手元・社内向けのアドレスには取りに行かない。
+ * pi を動かしている機械には、外から触られたくない受け口がある（hayato なら hayato-send の受け口、
+ * クラウドならインスタンスの設定情報など）。Web の道具からそこへ届かないよう、手元・社内向けのアドレスには取りに行かない。
  */
 export function isPublicAddress(address: string): boolean {
   const version = isIP(address);

@@ -1,7 +1,7 @@
 /**
  * 道具箱の拡張機能で、使ってはいけない書き方。
  *
- * hayato の安全装置（hayato 本体の hayato-guard.ts）は、pi の bash・edit・write の呼び出しを見張っている。
+ * pi を自動で動かすときは、安全装置（hayato なら hayato-guard.ts）が bash・edit・write の呼び出しを見張る。
  * 拡張機能はそれと同じ力を、安全装置を通らずに持てるので、ここで機械的に止める。
  * 機械で見つけられない抜け道もあるので、最後は人のレビューで確かめる。
  */
@@ -37,7 +37,8 @@ export const FORBIDDEN_PATTERNS: readonly ForbiddenPattern[] = [
   },
   {
     pattern: /setActiveTools|registerProvider|\.on\(\s*["']session_/,
-    reason: "道具の入れ替えや、頭脳・セッションの差し替えは、hayato 本体の仕組みと食い違う",
+    reason:
+      "道具の入れ替えや、モデル・セッションの差し替えは、pi を動かす側（hayato など）の仕組みと食い違う",
   },
   {
     pattern: /\beval\s*\(|new\s+Function\s*\(|\bimport\s*\(/,

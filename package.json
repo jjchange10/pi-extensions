@@ -1,8 +1,8 @@
 {
-  "name": "hayato-pi-extensions",
+  "name": "pi-extensions",
   "version": "0.1.0",
   "private": true,
-  "description": "hayato の道具箱。pi coding agent の拡張機能を、hayato が提案し、人がマージして育てる",
+  "description": "自分用の pi coding agent の拡張機能（道具箱）。手元の pi でも hayato でも使う",
   "type": "module",
   "packageManager": "pnpm@10.28.0",
   "engines": {

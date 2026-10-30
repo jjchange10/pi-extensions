@@ -42,7 +42,7 @@ export async function fetchPage(
     const response = await dependencies.fetch(url, {
       redirect: "manual",
       signal: combinedSignal,
-      headers: { "user-agent": "hayato-pi-extensions/web (+https://github.com/jjchange10)" },
+      headers: { "user-agent": "pi-extensions/web (+https://github.com/jjchange10/pi-extensions)" },
     });
     const location = response.headers.get("location");
     if (response.status >= 300 && response.status < 400 && location !== null) {
