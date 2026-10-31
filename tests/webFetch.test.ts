@@ -63,6 +63,7 @@ describe("fetchPage", () => {
       /公開されていない/,
     );
     await expect(fetchPage("http://[::ffff:7f00:1]/", web)).rejects.toThrow(/公開されていない/);
+    await expect(fetchPage("http://[64:ff9b::7f00:1]/", web)).rejects.toThrow(/公開されていない/);
     await expect(fetchPage("http://internal.example/", web)).rejects.toThrow(/公開されていない/);
     expect(web.requested).toEqual([]);
   });
