@@ -22,6 +22,15 @@ pi -e ~/pi-extensions/extensions/web.ts
 
 いつも使うなら、`~/.pi/agent/settings.json` の `extensions` に `extensions/` の中のファイルを書きます。Web 検索を使うときは、環境変数 `TAVILY_API_KEY` に [Tavily](https://tavily.com/) の API キー（無料で月1,000回）を入れます。
 
+**`extensions/web.ts` の道具を頼む**
+
+pi に普通の言葉で頼めば、pi が道具を選んで使います。
+
+- `web_fetch`: URL の Web ページを取ってきて、本文を文章にして読みます。長いページは途中で切ります。手元や社内のアドレス（`localhost` や社内ネットワークなど）には取りに行きません。
+  - 頼み方の例: 「https://example.com/docs/getting-started を読んで、要点を3行でまとめて」
+- `web_search`: Web を検索して、上位の結果（題名・URL・要点）を返します。詳しく読むときは `web_fetch` を使います。環境変数 `TAVILY_API_KEY` があるときだけ使えます。
+  - 頼み方の例: 「pnpm の workspace の設定方法を Web で検索して、公式ドキュメントの URL を教えて」
+
 **hayato で使う**
 
 hayato の compose が、隣に clone したこのリポジトリの `extensions/` を読み取り専用でコンテナに渡します。hayato は中の `.ts` をすべて読み込み、最後に安全装置を読み込みます。
