@@ -56,3 +56,7 @@ pnpm check   # 型チェック・フォーマット・テスト（安全のル�
 ```
 
 開発のルールは [CLAUDE.md](CLAUDE.md) にまとめています。
+
+## ライセンス
+
+MIT（[LICENSE](LICENSE)）
