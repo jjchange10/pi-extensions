@@ -32,11 +32,12 @@ function isPublicIPv6(address: string): boolean {
   // IPv4 を IPv6 の形で書いたもの（::ffff:127.0.0.1 など）は、IPv4 として調べる
   const mapped = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/.exec(lower);
   if (mapped?.[1] !== undefined) return isPublicIPv4(mapped[1]);
-  // new URL(...).hostname は 16進2ブロック（::ffff:7f00:1）に直して渡してくるので、こちらも IPv4 に戻して調べる
-  const mappedHex = /^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/.exec(lower);
-  if (mappedHex?.[1] !== undefined && mappedHex[2] !== undefined) {
-    const high = parseInt(mappedHex[1], 16);
-    const low = parseInt(mappedHex[2], 16);
+  // new URL(...).hostname は 16進2ブロック（::ffff:7f00:1）に直して渡してくるので、こちらも IPv4 に戻して調べる。
+  // IPv4 互換（::7f00:1）と NAT64（64:ff9b::7f00:1）も、中に IPv4 を持つ書き方なので同じように調べる
+  const embedded = /^(?:::ffff:|::|64:ff9b::)([0-9a-f]{1,4}):([0-9a-f]{1,4})$/.exec(lower);
+  if (embedded?.[1] !== undefined && embedded[2] !== undefined) {
+    const high = parseInt(embedded[1], 16);
+    const low = parseInt(embedded[2], 16);
     return isPublicIPv4(`${high >> 8}.${high & 0xff}.${low >> 8}.${low & 0xff}`);
   }
   const isPrivate =
