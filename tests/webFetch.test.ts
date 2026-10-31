@@ -62,6 +62,7 @@ describe("fetchPage", () => {
     await expect(fetchPage("http://127.0.0.1:8787/messages", web)).rejects.toThrow(
       /公開されていない/,
     );
+    await expect(fetchPage("http://[::ffff:7f00:1]/", web)).rejects.toThrow(/公開されていない/);
     await expect(fetchPage("http://internal.example/", web)).rejects.toThrow(/公開されていない/);
     expect(web.requested).toEqual([]);
   });

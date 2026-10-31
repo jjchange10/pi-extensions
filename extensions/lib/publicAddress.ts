@@ -32,6 +32,13 @@ function isPublicIPv6(address: string): boolean {
   // IPv4 を IPv6 の形で書いたもの（::ffff:127.0.0.1 など）は、IPv4 として調べる
   const mapped = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/.exec(lower);
   if (mapped?.[1] !== undefined) return isPublicIPv4(mapped[1]);
+  // new URL(...).hostname は 16進2ブロック（::ffff:7f00:1）に直して渡してくるので、こちらも IPv4 に戻して調べる
+  const mappedHex = /^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/.exec(lower);
+  if (mappedHex?.[1] !== undefined && mappedHex[2] !== undefined) {
+    const high = parseInt(mappedHex[1], 16);
+    const low = parseInt(mappedHex[2], 16);
+    return isPublicIPv4(`${high >> 8}.${high & 0xff}.${low >> 8}.${low & 0xff}`);
+  }
   const isPrivate =
     lower === "::" ||
     lower === "::1" ||

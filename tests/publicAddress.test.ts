@@ -3,9 +3,12 @@ import { describe, expect, it } from "vitest";
 import { isPublicAddress } from "../extensions/lib/publicAddress.ts";
 
 describe("isPublicAddress", () => {
-  it.each(["8.8.8.8", "140.82.112.3", "2606:4700::6810:85e5"])("%s は公開アドレス", (address) => {
-    expect(isPublicAddress(address)).toBe(true);
-  });
+  it.each(["8.8.8.8", "140.82.112.3", "2606:4700::6810:85e5", "::ffff:808:808"])(
+    "%s は公開アドレス",
+    (address) => {
+      expect(isPublicAddress(address)).toBe(true);
+    },
+  );
 
   it.each([
     "127.0.0.1",
@@ -18,6 +21,9 @@ describe("isPublicAddress", () => {
     "fd00::1",
     "fe80::1",
     "::ffff:127.0.0.1",
+    "::ffff:7f00:1",
+    "::ffff:a9fe:a9fe",
+    "::ffff:c0a8:1",
     "localhost",
   ])("%s は手元・社内向けなので断る", (address) => {
     expect(isPublicAddress(address)).toBe(false);
